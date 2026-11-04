@@ -1,0 +1,174 @@
+:root {
+  --bg: #0f0f12; --card: #18181c; --red: #8b0000;
+  --text: #e0e0e0; --border: #3a3a42; --input: #222228; --header-bg: #1a1a20;
+}
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Georgia", serif; background: var(--bg); color: var(--text); margin: 0; padding: 12px; font-size: 13px; }
+h1 { text-align: center; color: #f0a0a0; font-size: 1.4rem; margin: 0 0 12px 0; font-weight: bold; letter-spacing: 3px; border-bottom: 1px solid var(--red); padding-bottom: 6px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 10px; margin-bottom: 12px; }
+.sticky-top-bar { position: sticky; top: 0; z-index: 1000; background: rgba(24, 24, 28, 0.95); backdrop-filter: blur(4px); border: 1px solid var(--red); box-shadow: 0 4px 12px rgba(0,0,0,0.6); margin-bottom: 12px; }
+.title { font-size: .95rem; font-weight: bold; color: #f0a0a0; border-bottom: 2px solid var(--red); padding-bottom: 4px; margin-bottom: 8px; font-family: serif; }
+.part-header { background: #2a0808; border: 1px solid var(--red); color: #ffffff; padding: 4px 8px; font-weight: bold; font-size: .9rem; margin-top: 12px; display: flex; justify-content: space-between; align-items: center; letter-spacing: 1px; }
+.part-header .val { font-size: .75rem; color: #ddd; font-weight: normal; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+label { display: block; font-size: .75rem; color: #aaa; margin-bottom: 2px; }
+input:not([type="checkbox"]):not([type="radio"]), select, textarea { width: 100%; padding: 5px; border: 1px solid var(--border); border-radius: 3px; background: var(--input); color: #fff; font-size: .85rem; font-family: sans-serif; text-align: center; }
+input[type="text"] { text-align: left; }
+textarea { text-align: left; resize: vertical; }
+/* チェックボックスは背景色の指定を受けないようにし、見やすい色をはっきり指定する */
+input[type="checkbox"] { width: auto; accent-color: #f0a0a0; background: #fff; }
+.table-scroll { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin-top: 4px; min-width: 100%; }
+th, td { border: 1px solid var(--border); padding: 4px 2px; text-align: center; font-size: .8rem; }
+th { background: var(--header-bg); color: #eee; font-weight: normal; letter-spacing: 1px; }
+.calc-table { background: #121215; margin-bottom: 8px; }
+.calc-table th { background: #22222a; color: #ccc; font-weight: bold; }
+.calc-table td.label-cell { background: #1e1e24; text-align: right; padding-right: 8px; font-weight: bold; color: #ddd; }
+.calc-table input[type="number"] { width: 100%; background: #18181c; border: 1px solid #444; color: #fff; font-weight: bold; }
+.calc-table input[type="radio"] { width: 18px; height: 18px; accent-color: var(--red); cursor: pointer; margin: 0 auto; }
+.calc-table .total-row td { background: #2a0808; color: #fff; font-size: 1rem; font-weight: bold; }
+.limit-table { font-size: 0.75rem; margin-top: 8px; background: #15151a; }
+.limit-table th { background: #22222c; color: #f0a0a0; }
+.limit-table td { padding: 3px; }
+.limit-table input[type="number"] { width: 45px; background: #18181c; border: 1px solid #444; color: #ff8888; font-weight: bold; padding: 2px; }
+.limit-ok, .limit-selected { color: #8ff; font-weight: bold; }
+.limit-ng { color: #ff8888; font-weight: bold; }
+.btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+button { padding: 8px; border: none; border-radius: 4px; background: var(--red); color: #fff; font-weight: bold; cursor: pointer; font-size: .85rem; font-family: sans-serif; }
+button:hover { opacity: 0.9; }
+button.sec { background: #4a4a52; }
+button.del { background: #522; color: #f88; padding: 2px 6px; }
+.add-part-select { width: 100%; margin-top: 6px; padding: 6px; background: #25252d; color: #f0a0a0; border: 1px dashed var(--border); border-radius: 3px; font-size: .85rem; cursor: pointer; }
+tr.broken input, tr.broken textarea { text-decoration: line-through; opacity: 0.5; }
+tr.used td { background: rgba(255, 220, 100, 0.07); }
+tr.used input:not([type="checkbox"]), tr.used textarea, tr.used select { opacity: 0.65; }
+
+/* --- キャラクター管理（複数保存）--- */
+.slot-select-row { margin-bottom: 8px; }
+.action-btn-row { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 10px 2px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+.action-btn { flex: 0 0 auto; min-width: 132px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; background: #14161a; border: 1.5px solid #444; font-weight: bold; font-size: .82rem; cursor: pointer; text-align: left; line-height: 1.3; font-family: sans-serif; }
+.action-btn:active { opacity: 0.75; }
+.action-btn .icon { font-size: 1.5rem; flex-shrink: 0; }
+.action-btn.c-green  { border-color: #2f6b4f; background: #14211a; color: #7fe3a8; }
+.action-btn.c-blue   { border-color: #4b4bcf; background: #17182c; color: #9aa4ff; }
+.action-btn.c-orange { border-color: #8a5a2e; background: #271b10; color: #ffbb80; }
+.action-btn.c-red    { border-color: #7a3232; background: #241313; color: #ff9a9a; }
+.action-btn.c-purple { border-color: #6a3e9e; background: #1e1626; color: #cba3ff; }
+.action-btn.c-teal   { border-color: #2e7a72; background: #102420; color: #7ae8da; }
+.action-btn.c-yellow { border-color: #8a7a2e; background: #26230f; color: #f0d878; }
+.action-btn.c-cyan   { border-color: #2e6a8a; background: #0f1f26; color: #7ac4f0; }
+.action-btn.c-pink   { border-color: #9e3e6a; background: #26101c; color: #ff9ac4; }
+
+/* --- 保存キャラクターのカード表示 --- */
+.save-cards-row { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 10px 2px; -webkit-overflow-scrolling: touch; }
+.save-card { flex: 0 0 auto; width: 92px; background: #16161c; border: 2px solid #3a3a42; border-radius: 10px; padding: 6px; text-align: center; cursor: pointer; }
+.save-card.selected { border-color: #f0a0a0; background: #241416; box-shadow: 0 0 0 1px #f0a0a0 inset; }
+.save-card-thumb { width: 78px; height: 78px; object-fit: cover; border-radius: 6px; display: block; margin: 0 auto 4px auto; background: #222228; }
+.save-card-thumb-placeholder { display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #555; }
+.save-card-name { font-size: .72rem; font-weight: bold; color: #eee; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.save-card-sub { font-size: .62rem; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* --- 自動保存ステータス・元に戻すボタン --- */
+#autosave-status { font-size: .68rem; color: #7fe3a8; }
+.undo-btn { background: #2a2a32; color: #f0d878; border: 1px solid #555; border-radius: 6px; padding: 3px 8px; font-size: .72rem; font-weight: bold; cursor: pointer; font-family: sans-serif; }
+.undo-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* --- 表示モード（編集画面と分離） --- */
+body.view-mode .edit-only { display: none !important; }
+
+/* 表示モードの時だけ見せたい要素（例: 表示画面からの共有ボタン） */
+.view-only { display: none; }
+body.view-mode .view-only { display: block; }
+body:not(.view-mode) #view-mode-image-container { display: none !important; }
+#view-mode-image-container img { max-width: 100%; max-height: 280px; display: block; margin: 0 auto 10px auto; border-radius: 8px; border: 1.5px solid #8b0000; object-fit: cover; }
+body.view-mode .del { display: none !important; }
+body.view-mode .color-col { display: none !important; }
+body.view-mode .col-op { display: none !important; }
+
+/* --- マニューバ表をコンパクトに（縦幅を詰めて1画面でより多く見えるように） --- */
+.maneuver-table th, .maneuver-table td { padding: 2px 2px; font-size: .72rem; }
+.maneuver-table input, .maneuver-table select { font-size: .72rem; padding: 2px; }
+/* スマホのプルダウン矢印アイコンが幅を圧迫して文字が見えなくなるのを防ぐ（矢印を消して文字表示分の幅を確保） */
+.maneuver-table select { appearance: none; -webkit-appearance: none; -moz-appearance: none; padding: 2px 1px; text-align: center; }
+.maneuver-table textarea { font-size: .72rem; padding: 1px 2px; min-height: 30px; line-height: 1.25; }
+
+body.view-mode input:not([type="checkbox"]),
+body.view-mode select,
+body.view-mode textarea {
+  pointer-events: none !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+/* 効果メモ欄も、表示モードではパーツ名・分類などと同じく透明にして、行の色と一体化させる */
+body.view-mode input[type="radio"] { opacity: 0.85; }
+
+/* 損傷チェックだけはセッション中も操作できるよう残す */
+body.view-mode input[type="checkbox"] { pointer-events: auto !important; }
+
+body.view-mode .part-header .val,
+body.view-mode th { color: #ddd; }
+
+/* --- キャラクター切替オーバーレイ --- */
+.char-switch-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.char-switch-btn {
+  width: 100%; margin-bottom: 8px; padding: 9px; background: #1c1c22; color: #8ff;
+  border: 1.5px solid #2e6a8a; border-radius: 8px; font-weight: bold; font-size: 0.85rem;
+  cursor: pointer; font-family: sans-serif;
+}
+
+/* --- カテゴリ選択（色だけのコンパクトな枠。押すと選択肢名が見える） --- */
+.p-tag, .skill-tag {
+  width: 100%;
+  min-width: 22px;
+  padding: 3px 0;
+  color: transparent;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  text-align: center;
+  text-align-last: center;
+}
+
+/* --- 左下固定：小さいアイコンボタン群（キャラ切替・表示/編集モード切替） --- */
+.corner-btn {
+  position: fixed;
+  left: 20px;
+  z-index: 9999;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: bold;
+  font-family: sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  white-space: nowrap;
+}
+
+/* --- パーツ表：1段目（本体）と2段目（効果メモ）の区切り線は、他の罫線と同じように表示する --- */
+.maneuver-table tr.part-memo-row td,
+.maneuver-table tr.skill-memo-row td { text-align: left; padding: 1px 3px 2px 3px; }
+/* 効果メモは内容に合わせて高さを自動調整するので、最低高さの指定を外し、余分な余白や手動リサイズも不要にする */
+.maneuver-table tr.part-memo-row textarea,
+.maneuver-table tr.skill-memo-row textarea {
+  min-height: 0;
+  resize: none;
+  overflow-y: hidden;
+  /* 対応ブラウザでは、JSの計算タイミングに頼らずブラウザ自身が内容の高さに自動追従してくれる */
+  field-sizing: content;
+}
+
+/* --- 効果メモが元々空のパーツ用：追加ボタン --- */
+.add-memo-btn {
+  display: block;
+  width: 100%;
+  padding: 3px 6px;
+  background: transparent;
+  color: #aaa;
+  border: 1px dashed rgba(255,255,255,0.3);
+  border-radius: 3px;
+  font-size: 0.68rem;
+  cursor: pointer;
+  text-align: left;
+}
+/* 表示モードでは、まだメモが追加されていない（ボタンが残ったままの）2段目は場所を取らないようにする */
+body.view-mode tr.part-memo-row:has(.add-memo-btn) { display: none; }
